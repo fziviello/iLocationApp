@@ -66,13 +66,13 @@ public class logout_Fragment extends Fragment {
                     Thread thread = new Thread(new Runnable() {
                         public void run() {
 
-                            RequestHttp request_login = new RequestHttp();
+                            RequestHttps request_login = new RequestHttps();
                             int codiceRisposta=500;
                             JSONObject rispostaJson=null;
 
                             try {
                                 try {
-                                    rispostaJson = request_login.execute("http://192.168.1.24:3000/api/v1/logout", user.toString(), "POST",jBUser.optString("token").toString()).get();
+                                    rispostaJson = request_login.execute("https://192.168.1.24:3000/api/v1/logout", user.toString(), "POST",jBUser.optString("token").toString()).get();
                                     codiceRisposta=Integer.parseInt(rispostaJson.getString("code"));
 
                                 } catch (ExecutionException e) {

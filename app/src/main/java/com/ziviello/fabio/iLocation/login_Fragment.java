@@ -86,14 +86,14 @@ public class login_Fragment extends Fragment {
                                     Thread thread = new Thread(new Runnable() {
                                         public void run() {
 
-                                            RequestHttp request_login = new RequestHttp();
+                                            RequestHttps request_login = new RequestHttps();
                                             int codiceRisposta = 500;
                                             JSONObject rispostaJson = null;
                                             JSONObject risultatoJson = null;
 
                                             try {
                                                 try {
-                                                    rispostaJson = request_login.execute("http://192.168.1.24:3000/api/v1/login", user.toString(), "POST", "").get();
+                                                    rispostaJson = request_login.execute("https://192.168.1.24:3000/api/v1/login", user.toString(), "POST", "").get();
                                                     codiceRisposta = Integer.parseInt(rispostaJson.getString("code"));
                                                     risultatoJson = new JSONObject(rispostaJson.getString("response"));
 

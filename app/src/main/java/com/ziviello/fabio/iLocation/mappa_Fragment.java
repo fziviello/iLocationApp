@@ -92,7 +92,6 @@ public class mappa_Fragment extends Fragment implements AdapterView.OnItemClickL
 
         jBUser = UserLoggedSingleton.get(getActivity()).getUtente_log();
 
-
         autoCompView = (AutoCompleteTextView) rootview.findViewById(R.id.txtSearchMap);
         autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.list_item));
         autoCompView.setOnItemClickListener(this);
@@ -281,7 +280,7 @@ public class mappa_Fragment extends Fragment implements AdapterView.OnItemClickL
 
     public ArrayList<String> autocomplete(String input) throws UnsupportedEncodingException {
         ArrayList<String> resultList = null;
-        RequestHttp request_autocomplete = new RequestHttp();
+        RequestHttps request_autocomplete = new RequestHttps();
         JSONObject rispostaJson = null;
 
         try {
@@ -391,7 +390,7 @@ public class mappa_Fragment extends Fragment implements AdapterView.OnItemClickL
                 Thread thread = new Thread(new Runnable() {
                     public void run() {
 
-                        RequestHttp request_directions = new RequestHttp();
+                        RequestHttps request_directions = new RequestHttps();
                         JSONObject rispostaJson = null;
                         JSONObject jboUrl = new JSONObject();
 

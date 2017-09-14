@@ -17,7 +17,7 @@ public class SocketSingleton {
 
     public SocketSingleton(Context context) {
         this.ctx = context;
-        SERVER_ADDRESS="http://192.168.1.24:4200";
+        SERVER_ADDRESS="https://192.168.1.24:4200";
         this.mSocket = getServerSocket();
     }
 
