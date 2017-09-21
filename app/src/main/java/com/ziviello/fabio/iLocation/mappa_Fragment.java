@@ -280,7 +280,7 @@ public class mappa_Fragment extends Fragment implements AdapterView.OnItemClickL
 
     public ArrayList<String> autocomplete(String input) throws UnsupportedEncodingException {
         ArrayList<String> resultList = null;
-        RequestHttps request_autocomplete = new RequestHttps();
+        RequestHttp request_autocomplete = new RequestHttp();
         JSONObject rispostaJson = null;
 
         try {
