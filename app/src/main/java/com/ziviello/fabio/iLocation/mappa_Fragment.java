@@ -580,14 +580,14 @@ public class mappa_Fragment extends Fragment implements AdapterView.OnItemClickL
             JSONObject objSend = new JSONObject();
 
             try {
-                objSend.put("id", "1");
+                objSend.put("id",  jBUser.optString("id").toString());
                 objSend.put("lat", location.getLatitude());
                 objSend.put("lng", location.getLongitude());
-                objSend.put("title", "APP");
-                objSend.put("desc", "");
+                objSend.put("title", jBUser.optString("cognome").toString()+" "+ jBUser.optString("nome").toString());
+                objSend.put("desc", "Posizione inviata dall'app");
                 objSend.put("address", IndirizzoAttuale);
-                objSend.put("room", "gruppo");
-                objSend.put("colorMarker", "#000");
+                objSend.put("room",  jBUser.optString("room").toString());
+                objSend.put("colorMarker",  jBUser.optString("colorMarker").toString());
 
             } catch (JSONException e) {
                 Log.w("err", "Exception: " + e.toString());
@@ -629,14 +629,14 @@ public class mappa_Fragment extends Fragment implements AdapterView.OnItemClickL
             JSONObject objSend = new JSONObject();
 
             try {
-                objSend.put("id", "1");
+                objSend.put("id",  jBUser.optString("id").toString());
                 objSend.put("lat", address.latitude);
                 objSend.put("lng", address.longitude);
-                objSend.put("title", "APP");
-                objSend.put("desc", "");
+                objSend.put("title", jBUser.optString("cognome").toString()+" "+ jBUser.optString("nome").toString());
+                objSend.put("desc", "Posizione inviata dall'app");
                 objSend.put("address", indirizzo);
-                objSend.put("room", "gruppo");
-                objSend.put("colorMarker",  "#0000");
+                objSend.put("room",  jBUser.optString("room").toString());
+                objSend.put("colorMarker",  jBUser.optString("colorMarker").toString());
             } catch (JSONException e) {
                 Log.w("err", "Exception: " + e.toString());
             }
