@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GIT-iLocationApp.iml" filepath="$PROJECT_DIR$/GIT-iLocationApp.iml" group="iLocationApp" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/iLocationApp.iml" filepath="$PROJECT_DIR$/iLocationApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/iLocationApp-app.iml" filepath="$PROJECT_DIR$/app/iLocationApp-app.iml" group="iLocationApp/app" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="iLocationApp/app" />
+      <module fileurl="file://$PROJECT_DIR$/iLocationApp.iml" filepath="$PROJECT_DIR$/iLocationApp.iml" group="iLocationApp" />
     </modules>
   </component>
 </project>
