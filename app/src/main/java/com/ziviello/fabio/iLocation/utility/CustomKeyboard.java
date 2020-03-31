@@ -1,4 +1,4 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.utility;
 
 import android.content.Context;
 import android.os.IBinder;

@@ -1,4 +1,4 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.request;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;

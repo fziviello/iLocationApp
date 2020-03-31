@@ -1,4 +1,4 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.request;
 import android.os.AsyncTask;
 import android.util.Log;
 

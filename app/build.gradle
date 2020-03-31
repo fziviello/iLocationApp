@@ -1,16 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 27
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.ziviello.fabio.iLocation"
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
 
     }
     buildTypes {
@@ -32,17 +31,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.google.android.gms:play-services:8.4.0'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile files('libs/httpclient-4.3.6.jar')
-    compile files('libs/httpcore-4.3.3.jar')
-    compile files('libs/httpmime-4.3.6.jar')
-    compile ('io.socket:socket.io-client:0.8.3') {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.google.android.gms:play-services:8.4.0'
+    implementation files('libs/httpclient-4.3.6.jar')
+    implementation files('libs/httpcore-4.3.3.jar')
+    implementation files('libs/httpmime-4.3.6.jar')
+    implementation ('io.socket:socket.io-client:0.8.3') {
         exclude group: 'org.json', module: 'json'
     }
 }

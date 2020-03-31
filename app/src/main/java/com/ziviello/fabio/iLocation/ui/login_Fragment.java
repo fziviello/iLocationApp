@@ -1,4 +1,4 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,6 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ziviello.fabio.iLocation.R;
+import com.ziviello.fabio.iLocation.UserSession;
+import com.ziviello.fabio.iLocation.request.RequestHttps;
+import com.ziviello.fabio.iLocation.utility.CheckConnessione;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +49,7 @@ public class login_Fragment extends Fragment {
             }
         });
 
-        jBUser = UserLoggedSingleton.get(getActivity()).getUtente_log();
+        jBUser = UserSession.get(getActivity()).getUtente_log();
 
         if(jBUser==null) {
             BtnLogin.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +162,7 @@ public class login_Fragment extends Fragment {
                                                                     .commit();
 
                                                             //rendo globale l utente connesso
-                                                            UserLoggedSingleton.get(getActivity()).setUtente_log(utente_log);
+                                                            UserSession.get(getActivity()).setUtente_log(utente_log);
 
                                                         } catch (JSONException e) {
                                                             Log.w("err", "Exception: " + e.toString());

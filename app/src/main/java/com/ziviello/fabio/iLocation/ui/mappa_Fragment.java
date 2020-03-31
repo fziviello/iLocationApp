@@ -1,4 +1,4 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -49,6 +49,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.ziviello.fabio.iLocation.R;
+import com.ziviello.fabio.iLocation.SocketSingleton;
+import com.ziviello.fabio.iLocation.UserSession;
+import com.ziviello.fabio.iLocation.geo.UtilityLocation;
+import com.ziviello.fabio.iLocation.request.RequestHttp;
+import com.ziviello.fabio.iLocation.request.RequestHttps;
+import com.ziviello.fabio.iLocation.utility.CheckConnessione;
+import com.ziviello.fabio.iLocation.utility.CustomKeyboard;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,7 +99,7 @@ public class mappa_Fragment extends Fragment implements AdapterView.OnItemClickL
         rootview = inflater.inflate(R.layout.mappa_layout, container, false);
         getActivity().setTitle("Navigatore");
 
-        jBUser = UserLoggedSingleton.get(getActivity()).getUtente_log();
+        jBUser = UserSession.get(getActivity()).getUtente_log();
 
         autoCompView = (AutoCompleteTextView) rootview.findViewById(R.id.txtSearchMap);
         autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.list_item));

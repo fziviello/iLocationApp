@@ -1,4 +1,4 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.ui;
 
 /**
  * Created by fabio on 13/09/2017.
@@ -13,6 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.ziviello.fabio.iLocation.R;
+import com.ziviello.fabio.iLocation.SocketSingleton;
+import com.ziviello.fabio.iLocation.UserSession;
+import com.ziviello.fabio.iLocation.request.RequestHttps;
+import com.ziviello.fabio.iLocation.utility.CheckConnessione;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.concurrent.ExecutionException;
@@ -30,7 +37,7 @@ public class logout_Fragment extends Fragment {
         rootview = inflater.inflate(R.layout.logout_layout, container, false);
         getActivity().setTitle("Logout");
 
-        jBUser = UserLoggedSingleton.get(getActivity()).getUtente_log();
+        jBUser = UserSession.get(getActivity()).getUtente_log();
 
         if(jBUser==null)
         {
@@ -108,7 +115,7 @@ public class logout_Fragment extends Fragment {
                                             objSend.put("status", "0");
 
                                             SocketSingleton.get(getActivity()).getSocket().emit("unsubscribe", objSend);
-                                            UserLoggedSingleton.get(getActivity()).setUtente_log(null); //pulisco
+                                            UserSession.get(getActivity()).setUtente_log(null); //pulisco
 
                                         } catch (JSONException e) {
                                             Log.w("err", "Exception: " + e.toString());
@@ -143,8 +150,6 @@ public class logout_Fragment extends Fragment {
                 Log.e("Errore", ex.toString());
             }
         }
-
-
 
         return rootview;
     }

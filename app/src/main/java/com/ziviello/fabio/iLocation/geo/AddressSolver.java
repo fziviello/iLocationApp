@@ -1,4 +1,4 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.geo;
 
 import android.location.Address;
 import android.location.Geocoder;

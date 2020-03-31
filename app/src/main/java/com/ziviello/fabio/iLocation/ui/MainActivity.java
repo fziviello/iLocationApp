@@ -1,4 +1,5 @@
-package com.ziviello.fabio.iLocation;
+package com.ziviello.fabio.iLocation.ui;
+
 import android.app.FragmentManager;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -12,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+
+import com.ziviello.fabio.iLocation.R;
+import com.ziviello.fabio.iLocation.SocketSingleton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -98,9 +102,5 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-
-
     }
-
-
 }
