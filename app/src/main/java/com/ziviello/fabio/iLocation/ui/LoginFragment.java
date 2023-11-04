@@ -13,19 +13,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ziviello.fabio.iLocation.R;
+import com.ziviello.fabio.iLocation.SocketSingleton;
 import com.ziviello.fabio.iLocation.UserSession;
-import com.ziviello.fabio.iLocation.request.RequestHttps;
+import com.ziviello.fabio.iLocation.utility.RequestHttp;
 import com.ziviello.fabio.iLocation.utility.CheckConnessione;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 import static com.google.android.gms.internal.zzir.runOnUiThread;
+import static com.ziviello.fabio.iLocation.utility.Config.BASE_PATH;
+import static com.ziviello.fabio.iLocation.utility.Config.PATH_LOGIN;
 
-public class login_Fragment extends Fragment {
+public class LoginFragment extends Fragment {
     View rootview;
     private boolean statoLogin=false;
     private JSONObject utente_log;
@@ -37,10 +37,10 @@ public class login_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.login_layout, container, false);
         getActivity().setTitle("Login");
-        Button btnReset=(Button) rootview.findViewById(R.id.btnReset);
-        Button BtnLogin=(Button) rootview.findViewById(R.id.BtnLogin);
-        final EditText txtUser=(EditText) rootview.findViewById(R.id.txtUser);
-        final EditText txtPassword=(EditText) rootview.findViewById(R.id.txtPassword);
+        Button btnReset= rootview.findViewById(R.id.btnReset);
+        Button BtnLogin=rootview.findViewById(R.id.BtnLogin);
+        final EditText txtUser=rootview.findViewById(R.id.txtUser);
+        final EditText txtPassword=rootview.findViewById(R.id.txtPassword);
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,14 +58,15 @@ public class login_Fragment extends Fragment {
 
 
                     if (txtUser.length() <= 0 && txtPassword.length() <= 0) {
-                        txtUser.setError("Inserire la tua email");
-                        txtPassword.setError("Inserire una password");
+                        txtUser.setError("Inserisci la tua email");
+                        txtPassword.setError("Inserisci una password");
                     } else {
+
                         if (txtPassword.length() <= 0 && txtUser.length() > 0) {
-                            txtPassword.setError("Inserire una password");
+                            txtPassword.setError("Inserisci una password");
                         }
                         if (txtUser.length() <= 0 && txtPassword.length() > 0) {
-                            txtUser.setError("Inserire la tua email");
+                            txtUser.setError("Inserisci la tua email");
                         }
                         if (txtUser.length() > 0 && txtPassword.length() > 0) {
 
@@ -78,9 +79,7 @@ public class login_Fragment extends Fragment {
                                 parametri.put("password", txtPassword.getText().toString());
                                 user.put("login", parametri);
 
-                                CheckConnessione statoRete = new CheckConnessione();
-
-                                if (statoRete.isConnected(getActivity())) {
+                                if (CheckConnessione.isConnected(getActivity())) {
 
                                     final ProgressDialog ProgressLoading = new ProgressDialog(getActivity());
 
@@ -92,58 +91,41 @@ public class login_Fragment extends Fragment {
                                     Thread thread = new Thread(new Runnable() {
                                         public void run() {
 
-                                            RequestHttps request_login = new RequestHttps();
+                                            RequestHttp request_login = new RequestHttp();
                                             int codiceRisposta = 500;
                                             JSONObject rispostaJson = null;
                                             JSONObject risultatoJson = null;
 
                                             try {
-                                                try {
-                                                    rispostaJson = request_login.execute("https://192.168.1.24:3000/api/v1/login", user.toString(), "POST", "").get();
+
+                                                    rispostaJson = request_login.execute(BASE_PATH + "/" + PATH_LOGIN, user.toString(), "POST", "").get();
                                                     codiceRisposta = Integer.parseInt(rispostaJson.getString("code"));
                                                     risultatoJson = new JSONObject(rispostaJson.getString("response"));
-
-                                                } catch (ExecutionException e) {
-                                                    Log.w("err", "Exception: " + e.toString());
-                                                } catch (JSONException e) {
-                                                    Log.w("err", "Exception: " + e.toString());
-                                                }
 
                                                 if (codiceRisposta < 400) {
                                                     statoLogin = true;
 
                                                     JSONArray jsonNodoRisultato = risultatoJson.optJSONArray("result");
 
-                                                    Log.e("Risposta HTTP:", String.valueOf(jsonNodoRisultato));
+                                                    Log.i("Risposta HTTP:", String.valueOf(jsonNodoRisultato));
 
-                                                    ArrayList<HashMap<String, String>> Lista_risultato = new ArrayList<HashMap<String, String>>();
                                                     JSONObject jsonChildNode = null;
 
-                                                    try {
-                                                        jsonChildNode = jsonNodoRisultato.getJSONObject(0);
-                                                    } catch (JSONException e) {
-                                                        Log.w("err", "Exception: " + e.toString());
-                                                    }
+                                                    jsonChildNode = jsonNodoRisultato.getJSONObject(0);
 
                                                     utente_log = new JSONObject();
 
-                                                    try {
-                                                        utente_log.put("id", jsonChildNode.optString("id").toString());
-                                                        utente_log.put("token", jsonChildNode.optString("token").toString());
-                                                        utente_log.put("nome", jsonChildNode.optString("nome").toString());
-                                                        utente_log.put("cognome", jsonChildNode.optString("cognome").toString());
-                                                        utente_log.put("email", jsonChildNode.optString("email").toString());
-                                                        utente_log.put("room", jsonChildNode.optString("room").toString());
-                                                        utente_log.put("colorMarker", jsonChildNode.optString("colorMarker").toString());
-
-
-                                                    } catch (JSONException e) {
-                                                        Log.w("err", "Exception: " + e.toString());
-                                                    }
+                                                    utente_log.put("id", jsonChildNode.optString("id"));
+                                                    utente_log.put("token", jsonChildNode.optString("token"));
+                                                    utente_log.put("nome", jsonChildNode.optString("nome"));
+                                                    utente_log.put("cognome", jsonChildNode.optString("cognome"));
+                                                    utente_log.put("email", jsonChildNode.optString("email"));
+                                                    utente_log.put("room", jsonChildNode.optString("room"));
+                                                    utente_log.put("colorMarker", jsonChildNode.optString("colorMarker"));
                                                 }
 
-                                            } catch (InterruptedException e) {
-                                                Log.w("err", "Exception: " + e.toString());
+                                            } catch (Exception e) {
+                                                Log.w("err", "Exception: " + e);
                                             }
 
                                             runOnUiThread(new Runnable() {
@@ -151,12 +133,14 @@ public class login_Fragment extends Fragment {
                                                     ProgressLoading.cancel();
                                                     String MsgResult = "";
 
-                                                    if (statoLogin == true) {
-                                                        try {
+                                                    if (statoLogin) {
 
+                                                        SocketSingleton.get(getContext()).getSocket().connect();
+
+                                                        try {
                                                             MsgResult = "Benvenuto " + utente_log.getString("nome");
                                                             FragmentManager fragmentManager = getFragmentManager();
-                                                            Fragment fragment = new mappa_Fragment();
+                                                            Fragment fragment = new MapFragment();
                                                             fragmentManager.beginTransaction()
                                                                     .replace(R.id.container, fragment)
                                                                     .commit();
@@ -196,7 +180,7 @@ public class login_Fragment extends Fragment {
         else
         {
             FragmentManager fragmentManager = getFragmentManager();
-            Fragment fragment = new mappa_Fragment();
+            Fragment fragment = new MapFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();

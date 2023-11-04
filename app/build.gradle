@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.ziviello.fabio.iLocation"
         minSdkVersion 26
-        targetSdkVersion 27
-        versionCode 2
-        versionName "1.1"
+        targetSdkVersion 28
+        versionCode 1
+        versionName "2.0"
 
     }
     buildTypes {
@@ -27,18 +27,32 @@ android {
         warning 'InvalidPackage'
         abortOnError false
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:design:27.1.1'
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.startup:startup-runtime:1.0.0"
+    implementation 'androidx.work:work-runtime-ktx:2.8.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.gms:play-services:8.4.0'
-    implementation files('libs/httpclient-4.3.6.jar')
-    implementation files('libs/httpcore-4.3.3.jar')
-    implementation files('libs/httpmime-4.3.6.jar')
-    implementation ('io.socket:socket.io-client:1.0.0') {
+    implementation 'com.karumi:dexter:6.2.3'
+    implementation ('io.socket:socket.io-client:2.1.0') {
         exclude group: 'org.json', module: 'json'
     }
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
+    implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
 }

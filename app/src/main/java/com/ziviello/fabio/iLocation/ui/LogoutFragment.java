@@ -17,15 +17,17 @@ import android.widget.Toast;
 import com.ziviello.fabio.iLocation.R;
 import com.ziviello.fabio.iLocation.SocketSingleton;
 import com.ziviello.fabio.iLocation.UserSession;
-import com.ziviello.fabio.iLocation.request.RequestHttps;
+import com.ziviello.fabio.iLocation.utility.RequestHttp;
 import com.ziviello.fabio.iLocation.utility.CheckConnessione;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.concurrent.ExecutionException;
-import static com.google.android.gms.internal.zzir.runOnUiThread;
 
-public class logout_Fragment extends Fragment {
+import static com.google.android.gms.internal.zzir.runOnUiThread;
+import static com.ziviello.fabio.iLocation.utility.Config.BASE_PATH;
+import static com.ziviello.fabio.iLocation.utility.Config.PATH_LOGOUT;
+
+public class LogoutFragment extends Fragment {
     View rootview;
     private boolean statoRequest=false;
     private JSONObject jBUser;
@@ -43,7 +45,7 @@ public class logout_Fragment extends Fragment {
         {
 
             FragmentManager fragmentManager = getFragmentManager();
-            Fragment fragment= new login_Fragment();
+            Fragment fragment= new LoginFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();
@@ -56,12 +58,10 @@ public class logout_Fragment extends Fragment {
                 user = new JSONObject();
                 parametri = new JSONObject();
 
-                parametri.put("id",jBUser.optString("id").toString());
+                parametri.put("id", jBUser.optString("id"));
                 user.put("logout",parametri);
 
-                CheckConnessione statoRete = new CheckConnessione();
-
-                if (statoRete.isConnected(getActivity())) {
+                if (CheckConnessione.isConnected(getActivity())) {
 
                     final ProgressDialog ProgressLoading = new ProgressDialog(getActivity());
 
@@ -73,29 +73,19 @@ public class logout_Fragment extends Fragment {
                     Thread thread = new Thread(new Runnable() {
                         public void run() {
 
-                            RequestHttps request_login = new RequestHttps();
+                            RequestHttp request_login = new RequestHttp();
                             int codiceRisposta=500;
                             JSONObject rispostaJson=null;
 
                             try {
-                                try {
-                                    rispostaJson = request_login.execute("https://192.168.1.24:3000/api/v1/logout", user.toString(), "POST",jBUser.optString("token").toString()).get();
-                                    codiceRisposta=Integer.parseInt(rispostaJson.getString("code"));
 
-                                } catch (ExecutionException e) {
-                                    Log.w("err", "Exception: " + e.toString());
-                                } catch (JSONException e) {
-                                    Log.w("err", "Exception: " + e.toString());
-                                }
+                                rispostaJson = request_login.execute(BASE_PATH + "/" + PATH_LOGOUT, user.toString(), "POST", jBUser.optString("token").toString()).get();
+                                codiceRisposta=Integer.parseInt(rispostaJson.getString("code"));
 
-                                if(codiceRisposta<400)
-                                {
-                                    statoRequest = true;
-                                }
+                                if(codiceRisposta<400) { statoRequest = true; }
 
-
-                            } catch (InterruptedException e) {
-                                Log.w("err", "Exception: " + e.toString());
+                            } catch (Exception e) {
+                                Log.w("err", "Exception: " + e);
                             }
 
                             runOnUiThread(new Runnable() {
@@ -103,31 +93,33 @@ public class logout_Fragment extends Fragment {
                                     ProgressLoading.cancel();
                                     String MsgResult="";
 
-                                    if (statoRequest == true) {
+                                    if (statoRequest) {
 
                                         JSONObject objSend = new JSONObject();
 
                                         try {
-                                            objSend.put("idClient", jBUser.optString("id").toString());
-                                            objSend.put("nome", jBUser.optString("nome").toString());
-                                            objSend.put("cognome", jBUser.optString("cognome").toString());
-                                            objSend.put("room", jBUser.optString("room").toString());
+                                            objSend.put("idClient", jBUser.optString("id"));
+                                            objSend.put("nome", jBUser.optString("nome"));
+                                            objSend.put("cognome", jBUser.optString("cognome"));
+                                            objSend.put("room", jBUser.optString("room"));
                                             objSend.put("status", "0");
 
                                             SocketSingleton.get(getActivity()).getSocket().emit("unsubscribe", objSend);
-                                            UserSession.get(getActivity()).setUtente_log(null); //pulisco
+                                            UserSession.get(getActivity()).setUtente_log(null);
 
                                         } catch (JSONException e) {
-                                            Log.w("err", "Exception: " + e.toString());
+                                            Log.w("err", "Exception: " + e);
                                         }
 
                                         MsgResult = "Disconnesso ";
 
                                         FragmentManager fragmentManager = getFragmentManager();
-                                        Fragment fragment= new login_Fragment();
+                                        Fragment fragment= new LoginFragment();
                                         fragmentManager.beginTransaction()
                                                 .replace(R.id.container, fragment)
                                                 .commit();
+
+                                        SocketSingleton.get(getContext()).getSocket().disconnect();
 
                                     } else {
                                         MsgResult = "Errore Logout";

@@ -4,10 +4,14 @@ package com.ziviello.fabio.iLocation;
  * Created by fabio on 11/09/2017.
  */
 
+import static com.ziviello.fabio.iLocation.utility.Config.BASE_SOCKET;
+
 import android.content.Context;
 import java.net.URISyntaxException;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.engineio.client.transports.Polling;
+import io.socket.engineio.client.transports.WebSocket;
 
 public class SocketSingleton {
     private static SocketSingleton instance;
@@ -17,7 +21,7 @@ public class SocketSingleton {
 
     public SocketSingleton(Context context) {
         this.ctx = context;
-        SERVER_ADDRESS="https://192.168.1.24:4200";
+        SERVER_ADDRESS=BASE_SOCKET;
         this.mSocket = getServerSocket();
     }
 

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="iLocationApp/app" />
-      <module fileurl="file://$PROJECT_DIR$/iLocationApp.iml" filepath="$PROJECT_DIR$/iLocationApp.iml" group="iLocationApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/iLocationApp.iml" filepath="$PROJECT_DIR$/.idea/modules/iLocationApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/iLocationApp.app.unitTest.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "120486351159",
+    "project_id": "appaltamura",
+    "storage_bucket": "appaltamura.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120486351159:android:8e4c826e5e9a4736214ab2",
+        "android_client_info": {
+          "package_name": "com.ziviello.fabio.iLocation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4inbE1bdyYmXa8oHIuOk763RSC9hSfLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
